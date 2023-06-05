@@ -10,6 +10,7 @@ body{
   background-image: linear-gradient(to right top, #161618, #171718, #181818, #181819, #191919, #1b1b1c, #1e1e1f, #202022, #252528, #2a292e, #2f2e34, #35333a);
 background-image: linear-gradient(to top, #161618, #171718, #181818, #181819, #191919, #1b1b1c, #1e1e1f, #202022, #252528, #2a292e, #2f2e34, #35333a); */
 }
+
 @media screen and (min-width: 640px) {
 .topnav{
   display:flex;
