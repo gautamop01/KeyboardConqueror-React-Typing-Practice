@@ -145,37 +145,21 @@ const Spacebar = () => {
 
 
       {status === 'start' && (
-        // <div className='selectTimeWord'>
-        //   <span>
-        //     <span>Set countdown : </span>
-        //     <input className='inputword' type='number' value={seconds} defaultValue={seconds} onChange={numberChange} />
-        //   </span>
-        //   <span>
-        //     <span>Words Count : </span>
-        //     <input className='inputword' type='number' defaultValue={wordNums} value={wordNums} onChange={wordNumChange} />
-        //   </span>
-        //   <span>
-        //     <span>Keyboard Sound : </span>
-        //     <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
-        //     <label for="on"> ON</label>
-        //   </span>
-        // </div>
         <div className='selectTimeWord'>
-  <span>
-    <span>Countdown : </span>
-    <input className='inputword' type='number' value={seconds} disabled />
-  </span>
-  <span>
-    <span>Words Count : </span>
-    <input className='inputword' type='number' value={wordNums} disabled />
-  </span>
-  <span>
-    <span>Keyboard Sound : </span>
-    <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
-    <label htmlFor="on"> ON</label>
-  </span>
-</div>
-
+          <span>
+            <span>Set countdown : </span>
+            <input className='inputword' type='number' value={seconds} defaultValue={seconds} onChange={numberChange} />
+          </span>
+          <span>
+            <span>Words Count : </span>
+            <input className='inputword' type='number' defaultValue={wordNums} value={wordNums} onChange={wordNumChange} />
+          </span>
+          <span>
+            <span>Keyboard Sound : </span>
+            <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
+            <label for="on"> ON</label>
+          </span>
+        </div>
       )}
 
 
@@ -235,8 +219,8 @@ const Spacebar = () => {
       )}
       {status === 'disable' && (
         <div className='buttonRetry'>
-          <button onClick={() => window.location.reload()}>click here to retry</button></div>
-
+          <button onClick={() => window.location.reload()}>Click here to retry</button>
+        </div>
       )}
       {(status === 'start' || status === 'disable') && (<>
         <div className='created'>
