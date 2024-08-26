@@ -1,67 +1,75 @@
-import React, { useState } from 'react';
-import randomWords from 'random-words';
-import './App.css'
-import sound from './soundPlay.mp3';
-import spacebar from './spacebar.mp3'
-import Feedback from './components/Feedback'
-import TopNav from './components/TopNav'
-import Timer from './components/Timer'
-import ContactIcon from './components/ContactIcon'
+import React, { useState } from 'react'; // Import the useState hook from React
+import randomWords from 'random-words'; // Import the random-words library to generate random words
+import './App.css' // Import the App.css file for styling
+import sound from './soundPlay.mp3'; // Import the soundPlay.mp3 file for the keypress sound effect
+import spacebar from './spacebar.mp3' // Import the spacebar.mp3 file for the spacebar sound effect
+import Feedback from './components/Feedback' // Import the Feedback component
+import TopNav from './components/TopNav' // Import the TopNav component
+import Timer from './components/Timer' // Import the Timer component
+import ContactIcon from './components/ContactIcon' // Import the ContactIcon component
 
-function App() {
-  const [wordNums, setWordNums] = useState(100);
-  const [seconds, setSeconds] = useState(60);
-  const [words, setWords] = useState([]);
-  const [timer, setTimer] = useState(seconds);
-  const [inputWord, setInputWord] = useState('');
-  const [wordIndex, setWordIndex] = useState(0);
-  const [correct, setCorrect] = useState(0);
-  const [charIndex, setCharIndex] = useState(-1);
-  const [char, setChar] = useState('');
-  const [inCorrect, setInCorrect] = useState(0);
-  const [status, setStatus] = useState('start');
-  const [isChecked, setIsChecked] = useState(true);
-
+function App() { // Define the App component
+  const [wordNums, setWordNums] = useState(100); // Initialize the wordNums state to 100
+  const [seconds, setSeconds] = useState(60); // Initialize the seconds state to 60
+  const [words, setWords] = useState([]); // Initialize the words state to an empty array
+  const [timer, setTimer] = useState(seconds); // Initialize the timer state to the seconds state
+  const [inputWord, setInputWord] = useState(''); // Initialize the inputWord state to an empty string
+  const [wordIndex, setWordIndex] = useState(0); // Initialize the wordIndex state to 0
+  const [correct, setCorrect] = useState(0); // Initialize the correct state to 0
+  const [charIndex, setCharIndex] = useState(-1); // Initialize the charIndex state to -1
+  const [char, setChar] = useState(''); // Initialize the char state to an empty string
+  const [inCorrect, setInCorrect] = useState(0); // Initialize the inCorrect state to 0
+  const [status, setStatus] = useState('start'); // Initialize the status state to 'start'
+  const [isChecked, setIsChecked] = useState(true); // Initialize the isChecked state to true
+  
+  // handleCheckboxChange function is used to manage the state of the checkbox that controls whether the keyboard sound effects are enabled or disabled
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
 
-
+// Audio Playback Functions: Functions to play sounds for normal keypress and spacebar keypress events.
   const Normalplay = () => {
-    new Audio(sound).play()
+    new Audio(sound).play() // Play the soundPlay.mp3 file for the normal keypress sound effect
   }
 
 const Spacebar = () => {
-  new Audio(spacebar).play()
+  new Audio(spacebar).play() // Play the spacebar.mp3 file for the spacebar sound effect
 }
-  const startTimer = () => {
-    if (status === 'disable') {
-      setWords(generateWords());
-      setWordIndex(0);
-      setCorrect(0);
-      setInCorrect(0);
-      setStatus('enable');
-      setCharIndex(-1);
-      setChar('');
-    }
 
-    if (status === 'start') {
-      setStatus('enable');
-      setWords(generateWords())
-      let time = setInterval(() => {
-        setTimer((prevTimer) => {
-          if (prevTimer === 0) {
-            setStatus('disable');
-            clearInterval(time);
-            setInputWord('');
-          } else {
-            return prevTimer - 1;
-          }
-        });
-      }, 1000);
-    }
-  };
+// Timer Management Functions: Functions to start the timer and generate random words for the game.
+// startTimer: Starts the game timer and generates a new set of random words. If the timer reaches zero, it stops the game and updates the status.
+// startTimer function is used to start the game timer and generate random words for the game.
+const startTimer = () => {
+  // If the game is already disabled, reset the game state and enable it again.
+  if (status === 'disable') { 
+    setWords(generateWords()); // Generate new random words.
+    setWordIndex(0); // Reset the word index.
+    setCorrect(0); // Reset the correct count.
+    setInCorrect(0); // Reset the incorrect count.
+    setStatus('enable'); // Enable the game.
+    setCharIndex(-1); // Reset the character index.
+    setChar(''); // Reset the character.
+  }
 
+  // If the game is in the start state, start the timer and update the game status.
+  if (status === 'start') {
+    setStatus('enable'); // Enable the game.
+    setWords(generateWords()); // Generate new random words.
+    let time = setInterval(() => {
+      setTimer((prevTimer) => {
+        if (prevTimer === 0) {
+          setStatus('disable'); // Disable the game when the timer reaches zero.
+          clearInterval(time); // Clear the interval.
+          setInputWord(''); // Reset the input word.
+        } else {
+          return prevTimer - 1; // Decrement the timer by 1 second.
+        }
+      });
+    }, 1000); // Update the timer every 1 second.
+  }
+};
+
+// generateWords: Generates an array of random words using the random-words library.
   const generateWords = () => {
     const wordsArray = [];
     while (wordsArray.length < wordNums) {
@@ -71,70 +79,109 @@ const Spacebar = () => {
     return wordsArray;
   };
 
+  // Handle User Input: Function to handle user input and check for keypress events.
+  // event parameter is used to capture the keypress event.
   const handleInput = (event) => {
-    
+    // Check if the spacebar key is pressed
     if (event.key === ' ') {
+      // Call the checkMatch function to compare the input word with the current word
       checkMatch();
+      // Reset the input word
       setInputWord('');
+      // Move to the next word in the words array
       setWordIndex(wordIndex + 1);
+      // Reset the character index
       setCharIndex(-1);
-      if(isChecked){ Spacebar() }
-      
-
-    } else if (event.key === 'Backspace') {
+      // Play the spacebar sound if the checkbox is checked
+      if (isChecked) {
+        Spacebar();
+      }
+    } 
+    // Check if the backspace key is pressed
+    else if (event.key === 'Backspace') {
+      // Move the character index back by one
       setCharIndex(charIndex - 1);
+      // Reset the character
       setChar('');
-      if(isChecked){Normalplay();}
-      
-
-    } else {
+      // Play the normal keypress sound if the checkbox is checked
+      if (isChecked) {
+        Normalplay();
+      }
+    } 
+    // For any other key press
+    else {
+      // Move the character index forward by one
       setCharIndex(charIndex + 1);
+      // Set the current character
       setChar(event.key);
-      if(isChecked){Normalplay();}
+      // Play the normal keypress sound if the checkbox is checked
+      if (isChecked) {
+        Normalplay();
+      }
     }
   };
 
+  // checkMatch: Compares the input word with the current word in the game and updates the correct and incorrect counts accordingly.
   const checkMatch = () => {
     const wordToCompare = words[wordIndex];
     const doesItMatch = wordToCompare === inputWord.trim();
     if (doesItMatch) {
-      setCorrect(correct + 1);
+      setCorrect(correct + 1); // Increment the correct count if the input word matches the current word
     } else {
-      setInCorrect(inCorrect + 1);
+      setInCorrect(inCorrect + 1); // Increment the incorrect count if the input word does not match the current word
     }
   };
 
+  // getCharClass: Determines the CSS class for each character based on the current character index and game status to highlight correct or incorrect characters.
+  // wordInd: Index of the current word in the words array
+  // CharInd: Index of the current character in the word
+  // character: The character being typed
+    
   const getCharClass = (wordInd, CharInd, character) => {
+    // Check if the current character is the one being typed and if the game is not disabled
     if (wordInd === wordIndex && CharInd === charIndex && char && status !== 'disable') {
+      // Check if the character matches the input character
       if (character === char) {
+        // Return CSS class for correct character
+        // console.log('correct');
         return 'has-background-success';
       } else {
+        // Return CSS class for incorrect character
+        // console.log('incorrect');
         return 'has-background-danger';
       }
     } else if (wordInd === wordIndex && charIndex >= words[wordIndex].length) {
+      // Return CSS class for extra characters typed after the word is completed
+      // console.log('extra');
       return 'has-background-danger';
     }
   };
 
+  // Handle Timer and Word Count Changes: Functions to handle changes in the timer and word count input fields.
+  // numberChange: Updates the seconds and timer state when the value of the input field for countdown is changed.
+  // event parameter is used to capture the change event.
   const numberChange = (event) => {
-    const inputValue = event.target.value;
-    setSeconds(inputValue);
-    setTimer(inputValue);
+    const inputValue = event.target.value; // Get the value from the input field
+    setSeconds(inputValue); // Update the seconds state
+    setTimer(inputValue); // Update the timer state
   };
 
+  // wordNumChange: Updates the wordNums state when the value of the input field for word count is changed.
   const wordNumChange = (event) => {
-    const wordValue = event.target.value;
-    setWordNums(wordValue);
+    const wordValue = event.target.value; /// Get the value from the input field
+    setWordNums(wordValue); // Update the wordNums state
   };
 
+
+  // Render Function: The main render function that displays the game interface based on the game status.
   return (
     <>
-    <TopNav/>
+    <TopNav/> 
 
 
-   
+    {/* Top Navigation and Timer Components */}
           <Timer status={status} timer={timer} />
-      
+      {/* Input Section */}
       {status === 'enable' && (
         <div className='inputSection'>
           <input placeholder='Type word here and hit spacebar' disabled={status === 'disable'} type='text' onKeyDown={handleInput} value={inputWord} onChange={(event) => setInputWord(event.target.value)} />
@@ -143,7 +190,7 @@ const Spacebar = () => {
       )}
 
 
-
+{/* Countdown and Word Count Settings */}
       {status === 'start' && (
         <div className='selectTimeWord'>
           <span>
@@ -162,7 +209,7 @@ const Spacebar = () => {
         </div>
       )}
 
-
+{/* Random Words Display */}
       {status === 'enable' && (
         <div className='randomWords'>
           {words.map((word, i) => (
@@ -177,12 +224,13 @@ const Spacebar = () => {
           ))}
         </div>
       )}
-
+{/* Stop Button */}
       {status === 'enable' && (
         <div className='buttonStop'>
           <button onClick={() => window.location.reload()}>click here to stop</button></div>
 
       )}
+      {/* Start Button */}
       <div className='buttonStart'>
         {status === 'start' && (<>
           <span>Set countdown and number of words, then hit Start</span>
@@ -192,7 +240,7 @@ const Spacebar = () => {
         )}
 
       </div>
-
+      {/* Results Display */}
       {status === 'disable' && (
         <div className='Result'>
           <div className='resultportion'>

@@ -1,42 +1,42 @@
 body {
-  margin: 0;
+  margin: 0; /* Set margin to 0 */
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    sans-serif; /* Set font family */
+  -webkit-font-smoothing: antialiased; /* Enable font smoothing for better rendering on WebKit browsers */
+  -moz-osx-font-smoothing: grayscale; /* Enable font smoothing for better rendering on macOS */
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    monospace; /* Set font family for code elements */
 }
 
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* Full viewport height */
-  background-color: #f8f8f8; /* Optional: Background color */
+  display: flex; /* Use flexbox for layout */
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+  height: 100vh; /* Set height to full viewport height */
+  background-color: #f8f8f8; /* Set background color */
 }
 
 .buttonRetry {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: flex; /* Use flexbox for layout */
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
 }
 
 .buttonRetry button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  padding: 10px 20px; /* Set padding for button */
+  font-size: 16px; /* Set font size for button */
+  background-color: #007bff; /* Set background color for button */
+  color: white; /* Set text color for button */
+  border: none; /* Remove border from button */
+  border-radius: 8px; /* Set border radius for button */
+  cursor: pointer; /* Set cursor style for button */
+  transition: background-color 0.3s; /* Add transition effect for background color */
 }
 
 .buttonRetry button:hover {
-  background-color: #0056b3;
+  background-color: #0056b3; /* Change background color on hover */
 }
